@@ -1,11 +1,21 @@
-with import <nixpkgs> { };
+{ 
+  pkgs ? import <nixpkgs> {}, 
+}:
+let 
+  start = pkgs.writeShellScriptBin "start" "npx vite";
+in 
+pkgs.mkShell {
+  name = "m3e-dev-shell";
 
-let
-  pythonPackages = python3Packages;
-in pkgs.mkShell rec {
-  name = "nodejs";
-
-  buildInputs = [
+  packages = with pkgs; [
     nodejs_24
+    start
   ];
+
+  shellHook = ''
+    if [ ! -d node_modules ]; then
+      npm update
+      npm install
+    fi
+  '';
 }
