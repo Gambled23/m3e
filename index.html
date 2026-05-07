@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3E</title>
+    <script type="module" src="/main.js"></script>
+  </head>
+  <body>
+    M3E
+    <m3e-form-field variant="outlined">
+      <label slot="label" for="field1">Date Field</label>
+      <input autocomplete="off" id="field1" />
+      <m3e-icon-button slot="suffix">
+        <m3e-icon name="calendar_today"></m3e-icon>
+        <m3e-datepicker-toggle for="datepicker"></m3e-datepicker-toggle>
+      </m3e-icon-button>
+      <span slot="hint">MM/DD/YYYY</span>
+    </m3e-form-field>
+    <m3e-datepicker id="datepicker" date="2026-01-01" clearable></m3e-datepicker>
+    <script>
+      const picker = document.querySelector("#datepicker");
+      const field = document.querySelector("#field1");
+      field.value = new Date(picker.date).toLocaleDateString(); // Corrected this line
+      picker.addEventListener("change", () => {
+        field.value = new Date(picker.date).toLocaleDateString(); // Corrected this line
+      });
+    </script>
+
+    <m3e-form-field variant="outlined">
+      <label slot="label" for="field2">Date Range Field</label>
+      <input autocomplete="off" id="field2" />
+      <m3e-icon-button slot="suffix">
+        <m3e-icon name="calendar_today"></m3e-icon>
+        <m3e-datepicker-toggle for="range-picker"></m3e-datepicker-toggle>
+      </m3e-icon-button>
+      <span slot="hint">MM/DD/YYYY - MM/DD/YYYY</span>
+    </m3e-form-field>
+
+    <m3e-datepicker
+      id="range-picker"
+      range-start="2026-01-01"
+      start-at="2026-01-01"
+    ></m3e-datepicker>
+
+    <script>
+      const picker2 = document.querySelector("#range-picker");
+      const field2 = document.querySelector("#field2");
+      field2.value = new Date(picker2.rangeStart).toLocaleDateString() + " - " + new Date(picker2.rangeEnd).toLocaleDateString();
+      picker2.addEventListener("change", () => {
+        field2.value = new Date(picker2.rangeStart).toLocaleDateString() + " - " + new Date(picker2.rangeEnd).toLocaleDateString();
+      });
+    </script>
+  </body>
+</html>
