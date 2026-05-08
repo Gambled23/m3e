@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M3E</title>
+    
     <script type="module" src="/main.js"></script>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     M3E
@@ -27,14 +29,16 @@
       });
     </script>
 
+
+
     <m3e-form-field variant="outlined">
-      <label slot="label" for="field2">Date Range Field</label>
-      <input autocomplete="off" id="field2" />
+      <input class="date-input" type="date" id="field_start"/>
+      <input class="date-input" type="date" id="field_end"/>
+      
       <m3e-icon-button slot="suffix">
         <m3e-icon name="calendar_today"></m3e-icon>
         <m3e-datepicker-toggle for="range-picker"></m3e-datepicker-toggle>
       </m3e-icon-button>
-      <span slot="hint">MM/DD/YYYY - MM/DD/YYYY</span>
     </m3e-form-field>
 
     <m3e-datepicker
@@ -45,15 +49,18 @@
 
     <script>
       const picker2 = document.querySelector("#range-picker");
+      const fieldStart = document.querySelector("#field_start");
+      const fieldEnd = document.querySelector("#field_end");
       const field2 = document.querySelector("#field2");
-      field2.value = new Date(picker2.rangeStart).toLocaleDateString() + " - " + new Date(picker2.rangeEnd).toLocaleDateString();
+
+      fieldStart.value = new Date(picker2.rangeStart).toLocaleDateString();
+      fieldEnd.value = new Date(picker2.rangeEnd).toLocaleDateString();
+      
       picker2.addEventListener("change", () => {
-        field2.value = new Date(picker2.rangeStart).toLocaleDateString() + " - " + new Date(picker2.rangeEnd).toLocaleDateString();
+        fieldStart.value = new Date(picker2.rangeStart).toISOString().split('T')[0]; // Format as YYYY-MM-DD for input[type="date"]
+        fieldEnd.value = new Date(picker2.rangeEnd).toISOString().split('T')[0]; // Format as YYYY-MM-DD for input[type="date"]
       });
     </script>
-
-
-    <m3e-icon name="cake" variant="rounded"></m3e-icon>
 
   </body>
 </html>
